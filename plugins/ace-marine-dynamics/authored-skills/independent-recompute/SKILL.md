@@ -84,6 +84,29 @@ Treat a refusal as a finding about the **case**, not a limitation of the tool:
 if a specialist produced a number there, ask what validated it, because this
 oracle will not.
 
+## A defect this oracle itself carried — read this
+
+Until 2026-09-03 this oracle reported `Fv = w·(S1 + R)`, matching the reference
+fixture to 1e-9. It was **wrong**, and the way it was wrong is the useful lesson.
+
+The geometry was *derived* from the invariants documented in the fixture, and it
+was correct. `Fv` had no documented invariant, so it was **fitted** — obtained by
+pattern-matching the reference numbers until the ratio came out right.
+
+**Fitting a value to the artifact under test is not independence.** It reproduces
+the reference perfectly, including whatever the reference got wrong — which is
+exactly what happened: the fixture inherits the defect from a legacy routine, and
+the oracle inherited it from the fixture. A self-test built only on the fixture
+could never have caught it, because both sides carried the same error.
+
+What caught it was a **derived** check that fitting cannot satisfy: the force
+triangle must reproduce the input declination. `atan(Fh/Fv)` gave 7.025° where
+8.000° was the input. That check now runs on every call and in the self-test, and
+`Fv` is excluded from the fixture comparison via `KNOWN_BAD_REFERENCE`.
+
+When you extend this oracle: **derive, or find an identity that constrains the
+answer independently. Never fit to the thing you are checking.**
+
 ## Scope
 
 Lazy-wave and simple catenary geometry only. It says nothing about dynamics,

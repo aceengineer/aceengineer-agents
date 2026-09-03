@@ -34,6 +34,15 @@ import os
 import re
 import sys
 
+# Keys in the reference fixture that are WRONG and must not be asserted against.
+# `Fv` there is w*(S1 + R) -- the vertical component plus the horizontal tension.
+# Confirmed refuted 2026-09-03 by three independent routes (global vertical force
+# equilibrium, 4e6-panel Simpson quadrature, and the tangent identity): the
+# fixture's value implies a 7.025 deg declination where 8.000 deg was the input.
+# The defect is inherited from the legacy lazy-wave routine, and the same library
+# contains a second, correct definition (Fv = w*S) on its general-catenary path.
+KNOWN_BAD_REFERENCE = {"Fv"}
+
 REFERENCE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                          "..", "reference", "lazy_wave_reference_cases.yaml")
 
@@ -101,8 +110,27 @@ def solve(hangoff_angle, vertical_distance, sag_bend_elevation,
         total_X += X
 
     out["total_S"], out["total_X"] = total_S, total_X
+
+    # Forces. Fv is the VERTICAL COMPONENT of tension: the weight of the
+    # suspended hang-off segment, w*S1. Nothing else.
+    #
+    # The reference fixture and the digitalmodel solver both report
+    # w*(S1 + R) here, i.e. Fv + Fh. That is dimensionally a force but is
+    # neither the vertical component nor the total tension, and it is
+    # refutable without any solver: the force triangle must reproduce the
+    # input declination, and only w*S1 does. See ORACLE-FV-CORRECTION below.
     out["Fh"] = weight_without_buoyancy * R
-    out["Fv"] = weight_without_buoyancy * (out["hangoff_S"] + R)
+    out["Fv"] = weight_without_buoyancy * out["hangoff_S"]
+    out["T"] = weight_without_buoyancy * (R + d1)          # == hypot(Fh, Fv)
+
+    # Derived self-check, not a fitted one: the force triangle must return the
+    # declination that was fed in. This is what caught the inherited defect.
+    implied = 90.0 - math.degrees(math.atan2(out["Fv"], out["Fh"]))
+    if abs(implied - hangoff_angle) > 1e-9:
+        raise AssertionError(
+            f"force triangle does not reproduce the input declination: implied "
+            f"{implied:.6f} deg vs input {hangoff_angle:.6f} deg. Do not use this result."
+        )
 
     closure = d1 - d2 - d3 + d4 + d5
     if abs(closure - vertical_distance) > 1e-6:
@@ -171,12 +199,22 @@ def self_test(rtol=1e-9):
             continue
         bad = []
         for key, want in c["expected"].items():
-            if key not in got:
+            if key not in got or key in KNOWN_BAD_REFERENCE:
                 continue
             have = got[key]
             if abs(have - want) > rtol * max(1.0, abs(want)):
                 bad.append(f"{key}: oracle {have!r} vs reference {want!r}")
-        checked = sum(1 for k in c["expected"] if k in got)
+        checked = sum(1 for k in c["expected"] if k in got and k not in KNOWN_BAD_REFERENCE)
+
+        # The fixture's Fv is defective (see KNOWN_BAD_REFERENCE). Assert the
+        # corrected value against the tangent identity instead, which is fixed
+        # by the INPUT angle and cannot depend on any solver internals.
+        want_ratio = math.tan(math.radians(90.0 - c["inputs"]["hangoff_angle"]))
+        got_ratio = got["Fv"] / got["Fh"]
+        if abs(got_ratio - want_ratio) > 1e-9 * max(1.0, want_ratio):
+            bad.append(f"Fv/Fh: {got_ratio!r} vs tan(90-q) {want_ratio!r}")
+        else:
+            checked += 1
         if bad:
             failures += 1
             print(f"FAIL case {c['id']} ({len(bad)}/{checked} disagree)")

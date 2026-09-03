@@ -169,6 +169,35 @@ Coverage is deliberately narrow: lazy-wave geometry only. The skill says
 explicitly that silence on dynamics, fatigue, VIV or clashing is **not** a PASS.
 An oracle that pretended to broad coverage would launder unverified results.
 
+### The oracle was itself defective, and the chain caught it
+
+The first end-to-end run (#262) refuted this oracle's own `Fv`. Worth recording
+in full, because it is the sharpest available evidence that the design works —
+and the sharpest available warning about how "independent" can be counterfeit.
+
+The geometry here was **derived** from documented invariants and was correct.
+`Fv` had no documented invariant, so it was **fitted** to the reference numbers
+until the ratio matched. It then reproduced the fixture to 1e-9 — and was wrong,
+because the fixture carries a defect inherited from a legacy routine.
+
+> A value fitted to the artifact under test is not independent of it. It agrees
+> perfectly, including where the artifact is wrong, and the self-test cannot tell
+> the difference because both sides carry the same error.
+
+Three routes refuted it, none of which could be satisfied by fitting: global
+vertical force equilibrium, 4×10⁶-panel Simpson quadrature, and the tangent
+identity `Fv/Fh = tan(90−q)` — which is fixed by the *input* angle and cannot
+depend on any solver internal. The fixture's value implies a 7.025° declination
+where 8.000° was the input.
+
+Two changes followed: `Fv = w·S1` with `T = w·(R + d1)`, and a **derived**
+assertion on every call that the force triangle returns the input declination.
+`Fv` is now excluded from the fixture comparison by name, with the reason
+recorded at the exclusion.
+
+The general rule, now load-bearing for every future oracle: **derive it, or
+constrain it with an identity the artifact cannot influence. Never fit.**
+
 ## Vendored vs authored skills
 
 `plugins/ace-marine-dynamics/` carries both, and the distinction is structural,
