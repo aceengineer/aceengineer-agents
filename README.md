@@ -13,6 +13,13 @@ client. The verification gate is the product.
 /plugin marketplace add aceengineer/aceengineer-agents
 /plugin install ace-engineer@aceengineer
 /plugin install ace-marine-dynamics@aceengineer
+/plugin install ace-standards@aceengineer
+```
+
+`ace-standards` requires a licensed standards corpus. Point it at your clone:
+
+```bash
+/plugin configure ace-standards@aceengineer     # sets standards_corpus_path
 ```
 
 Then, in any project:
@@ -27,6 +34,7 @@ Then, in any project:
 |---|---|
 | **ace-engineer** | `ace-engineer` orchestrator, `ace-independent-verifier`, `engagement-intake` skill, `/ace` command |
 | **ace-marine-dynamics** | `orcaflex-specialist` + 60 vendored marine-offshore skills — mooring, riser, VIV, fatigue, diffraction, hydrodynamics, ship dynamics, wave theory |
+| **ace-standards** | `ace-standards` + `standards-lookup` over 354 corpus pages — resolves governing document, publisher and **edition**. Metadata only; never reproduces clause text. |
 
 Install `ace-engineer` first. The specialists are written to run under it and do
 not carry the verification gate themselves.
@@ -41,6 +49,12 @@ specialist; a fix is accepted only when the verifier's own reproducer passes.
 This is not a stylistic preference. On this practice's own record, a producer
 reviewing its own work returns MINOR findings where an independent reviewer
 returns MAJOR ones.
+
+**It is enforced by a hook, not by a prompt.** A `PreToolUse` hook in
+`ace-engineer` rejects any write to `deliverables/` — or any file marked
+`<!-- ace:deliverable -->` — whose verification record does not cite a verdict
+file that exists on disk, reads `PASS`, and records what was attempted to refute
+it. Behaviour is covered by `tests/test_verification_gate.py`.
 
 ## Deliverable shape
 
@@ -63,10 +77,10 @@ Do not hand-edit vendored skills — edit upstream and re-sync.
 
 ## Status
 
-`0.1.0` — skeleton. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the
-design and [`docs/ROADMAP.md`](docs/ROADMAP.md) for what is not built yet
-(`ace-standards`, `ace-knowledge`, the eval suite, and hook-level enforcement of
-the gate).
+`0.2.0` — three plugins, gate enforced in a hook. See
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the design and
+[`docs/ROADMAP.md`](docs/ROADMAP.md) for what is not built yet (`ace-knowledge`,
+the eval suite, and the org/licensing preconditions).
 
 ## Licence
 

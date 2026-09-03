@@ -69,3 +69,38 @@ Emit exactly one:
   class, the reproducer command, and what would have to change.
 
 A PASS emitted without a record of what you attempted is void.
+
+## Verdict artifact (required)
+
+A verdict that exists only in conversation cannot gate anything. Before you
+report, write your verdict to `.ace/verdicts/<slug>.json` relative to the
+engagement root, where `<slug>` names the result you verified:
+
+```json
+{
+  "slug": "fpso-mooring-100yr-intact",
+  "verdict": "PASS",
+  "verified_utc": "2026-09-03T14:00:00Z",
+  "target": "deliverables/fpso-mooring-100yr.md",
+  "attempted": [
+    "independent order-of-magnitude recompute via closed-form catenary",
+    "traced all 14 inputs to a source document",
+    "checked criterion against API RP 2SK 3rd ed, not recollection",
+    "load-bearing test on each of 5 stated assumptions",
+    "directionality and current-profile boundary conditions"
+  ],
+  "reproducer": "python3 verify/mooring_recompute.py --case 100yr-intact",
+  "rounds": 2,
+  "findings": []
+}
+```
+
+- `verdict` is `PASS` or `FINDINGS` — nothing else.
+- `attempted` must be non-empty on a PASS. A PASS with no record of what you
+  tried to refute is void, and the gate rejects it.
+- On `FINDINGS`, populate `findings` with `severity`, `class`, `reproducer`,
+  and `remedy` per entry, and leave `verdict` as `FINDINGS` until your own
+  reproducer passes against the fix.
+
+The `ace-engineer` verification gate reads this file. It is not paperwork — it
+is the mechanism.

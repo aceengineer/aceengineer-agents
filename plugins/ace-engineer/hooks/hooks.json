@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/verification_gate.py\"",
+            "timeout": 15,
+            "statusMessage": "AceEngineer verification gate…"
+          }
+        ]
+      }
+    ]
+  }
+}

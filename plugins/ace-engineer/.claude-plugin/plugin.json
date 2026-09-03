@@ -1,7 +1,7 @@
 {
   "name": "ace-engineer",
   "displayName": "AceEngineer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "General engineering agent for AceEngineer engagements: scopes the problem, routes to a domain specialist, and gates every deliverable behind independent verification.",
   "author": {
     "name": "Achanta AceEngineer Inc. (DBA AceEngineer)",
@@ -11,6 +11,12 @@
   "homepage": "https://aceengineer.com",
   "repository": "https://github.com/aceengineer/aceengineer-agents",
   "license": "LicenseRef-AceEngineer-Commercial",
-  "keywords": ["offshore", "marine", "engineering", "orchestrator", "verification"],
+  "keywords": [
+    "offshore",
+    "marine",
+    "engineering",
+    "orchestrator",
+    "verification"
+  ],
   "defaultEnabled": true
 }

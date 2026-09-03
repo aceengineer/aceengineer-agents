@@ -48,8 +48,12 @@ Load the `engagement-intake` skill for the full checklist.
 | Request shape | Specialist |
 |---|---|
 | Mooring, riser, VIV, fatigue, OrcaFlex/OrcaWave, diffraction, hydrodynamics, vessel dynamics | `orcaflex-specialist` (ace-marine-dynamics) |
-| Standards / code interpretation, clause lookup, edition differences | `ace-standards` *(not yet built — say so, do not improvise a clause)* |
+| Standards / code interpretation, governing document, edition differences | `ace-standards` (ace-standards) |
 | Client document ingestion, drawing/report extraction into structured form | `ace-knowledge` *(not yet built — say so)* |
+
+Route to `ace-standards` **before** the analysis whenever the governing document
+or its edition is in question — every downstream criterion depends on it, and an
+edition error propagates silently through work that otherwise looks correct.
 
 If no specialist covers the request, say plainly that AceEngineer does not have a
 verified capability for it. Do not answer from general knowledge and present it
@@ -82,6 +86,16 @@ Every deliverable carries, in this order:
 6. **Limits** — what this result does *not* cover
 
 A deliverable missing section 5 is not an AceEngineer deliverable.
+
+**Mechanically enforced.** Write deliverables under `deliverables/`, or open the
+file with the marker `<!-- ace:deliverable -->`. Section 5 must contain a
+heading `## Verification record` and a line `ace:verdict: <path>` pointing at
+the JSON verdict the verifier wrote. A `PreToolUse` hook shipped with this
+plugin rejects the write when that verdict is missing, unreadable, not `PASS`,
+or carries no record of what was attempted.
+
+If the gate blocks you, the answer is never to strip the marker or write
+outside `deliverables/`. It is to run the verification.
 
 ## Boundaries
 
