@@ -1,6 +1,6 @@
 # Roadmap
 
-`0.2.0`: the marketplace resolves, two plugins install, the
+`0.3.0`: the marketplace resolves, two plugins install, the
 orchestrator routes to a real specialist backed by 60 vendored skills. What is
 below is not built.
 
@@ -12,7 +12,7 @@ below is not built.
 | 2 | **Copyright assignment** | The company licenses content the individual owns. See `NOTICE.md`. |
 | 3 | **Corpus exposure decision** | `workspace-hub` is public and unlicensed. Either privatise the corpus or price the orchestration rather than the text. See `NOTICE.md`. |
 | ~~4~~ | ~~**L3 gate hook**~~ | ✅ Done in 0.2.0. `PreToolUse` hook + 9 behavioural tests. |
-| 5 | **Eval suite** (`claude plugin eval`) | No reliability claim survives a technical buyer without one. Seed it from closed engagements with known-correct answers. |
+| 5 | **Eval suite** (`claude plugin eval`) | No reliability claim survives a technical buyer without one. **Blocked, not skipped:** `claude plugin eval` reports *"currently in early access"* on this account and `eval init` produces nothing, and the `case.yaml` schema is absent from public docs — so authoring the suite now would be guessing at an undocumented gated format. Ground truth is already in hand (`authored-skills/independent-recompute/reference/`, 4 runs × 18 values); wrap it in cases as soon as access lands. |
 
 ## Next specialists
 
@@ -40,3 +40,15 @@ below is not built.
   absolute paths removed; upstream still has them.
 - `aceengineer-strategy/.claude/agents/*.md` have no YAML frontmatter, so they
   are documents rather than loadable agents.
+
+
+## Added in 0.3.0
+
+- `independent-recompute` — closed-form lazy-wave oracle, 72 reference values
+  reproduced to `1e-9`, wired into the verifier's first attack. Next: extend
+  coverage to simple catenary and taut-leg mooring, which are the other two
+  places a specialist result currently has no second route.
+- `tests/run_all.sh` — gate behaviour, oracle self-test, byte-identical skill
+  rebuild, manifest validation.
+- `authored-skills/` split, so the vendoring sync can no longer delete
+  repo-authored work.

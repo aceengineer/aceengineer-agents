@@ -2,6 +2,10 @@
 # Vendor AceEngineer's marine-offshore skill corpus into the ace-marine-dynamics
 # plugin, recording provenance so a rebuild is verifiable.
 #
+# Scope: this OWNS plugins/ace-marine-dynamics/skills/ and wipes it on every run.
+# Skills authored in this repo (the verification oracle) live in
+# plugins/ace-marine-dynamics/authored-skills/ and are declared in plugin.json.
+#
 #   ./scripts/sync-skills.sh            vendor (overwrites the plugin skills/ tree)
 #   ./scripts/sync-skills.sh --verify   rebuild into a temp dir and assert byte-identical
 #
@@ -43,6 +47,15 @@ if [ "${1:-}" = "--verify" ]; then
   echo "VERIFY FAIL: vendored tree differs from a fresh build" >&2
   diff -r "$DEST" "$TMP" >&2 || true
   exit 1
+fi
+
+# skills/ is machine-owned and wiped wholesale. Authored skills live in
+# authored-skills/ and are declared separately in plugin.json, so they are never
+# in the blast radius. Assert that, rather than trusting it.
+AUTHORED="$REPO_ROOT/plugins/ace-marine-dynamics/authored-skills"
+if [ -e "$DEST" ] && find "$DEST" -name SKILL.md -newer "$MANIFEST" 2>/dev/null | grep -q .; then
+  echo "NOTE: vendored tree has SKILL.md newer than the manifest — hand edits are" >&2
+  echo "      overwritten by design. Edit upstream, or move the skill to $AUTHORED." >&2
 fi
 
 rm -rf "$DEST"

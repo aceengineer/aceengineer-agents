@@ -33,7 +33,7 @@ Then, in any project:
 | Plugin | Contents |
 |---|---|
 | **ace-engineer** | `ace-engineer` orchestrator, `ace-independent-verifier`, `engagement-intake` skill, `/ace` command |
-| **ace-marine-dynamics** | `orcaflex-specialist` + 60 vendored marine-offshore skills — mooring, riser, VIV, fatigue, diffraction, hydrodynamics, ship dynamics, wave theory |
+| **ace-marine-dynamics** | `orcaflex-specialist` + 60 vendored marine-offshore skills — mooring, riser, VIV, fatigue, diffraction, hydrodynamics, ship dynamics, wave theory — plus `independent-recompute`, the verifier's closed-form oracle |
 | **ace-standards** | `ace-standards` + `standards-lookup` over 354 corpus pages — resolves governing document, publisher and **edition**. Metadata only; never reproduces clause text. |
 
 Install `ace-engineer` first. The specialists are written to run under it and do
@@ -56,6 +56,11 @@ returns MAJOR ones.
 file that exists on disk, reads `PASS`, and records what was attempted to refute
 it. Behaviour is covered by `tests/test_verification_gate.py`.
 
+The verifier is also given something to verify *with*. `independent-recompute`
+is a closed-form lazy-wave oracle that shares no code with the solver under test
+and reproduces 4 historical solver runs — 72 values — to `1e-9`. Its `--check`
+invocation is the runnable reproducer the verdict records.
+
 ## Deliverable shape
 
 Every output carries: **result** · **basis** (standard, edition, clause, method,
@@ -73,14 +78,25 @@ record is not an AceEngineer deliverable.
 ./scripts/sync-skills.sh --verify
 ```
 
-Do not hand-edit vendored skills — edit upstream and re-sync.
+Do not hand-edit vendored skills — edit upstream and re-sync. Skills authored in
+this repo live in `authored-skills/`, declared separately in `plugin.json`, and
+are never in the sync's blast radius.
+
+## Tests
+
+```bash
+./tests/run_all.sh
+```
+
+Gate behaviour · oracle vs historical runs · byte-identical skill rebuild ·
+manifest validation. No network, no licences, no solver.
 
 ## Status
 
-`0.2.0` — three plugins, gate enforced in a hook. See
+`0.3.0` — three plugins, gate enforced in a hook, verifier armed with an independent oracle. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the design and
 [`docs/ROADMAP.md`](docs/ROADMAP.md) for what is not built yet (`ace-knowledge`,
-the eval suite, and the org/licensing preconditions).
+the `claude plugin eval` suite, and the org/licensing preconditions).
 
 ## Licence
 

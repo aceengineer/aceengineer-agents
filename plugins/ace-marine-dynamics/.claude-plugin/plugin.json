@@ -1,7 +1,7 @@
 {
   "name": "ace-marine-dynamics",
   "displayName": "AceEngineer Marine Dynamics",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "OrcaFlex and OrcaWave specialist covering mooring, riser, VIV, fatigue, diffraction and hydrodynamic analysis. Invoked by the ace-engineer orchestrator; not intended to be driven directly.",
   "author": {
     "name": "Achanta AceEngineer Inc. (DBA AceEngineer)",
@@ -23,5 +23,8 @@
   "dependencies": [
     "ace-engineer"
   ],
-  "defaultEnabled": true
+  "defaultEnabled": true,
+  "skills": [
+    "./authored-skills/"
+  ]
 }

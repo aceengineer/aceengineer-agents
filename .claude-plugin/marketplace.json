@@ -2,7 +2,7 @@
   "$schema": "https://code.claude.com/schemas/marketplace.json",
   "name": "aceengineer",
   "description": "Offshore and marine engineering agents, maintained by AceEngineer.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "owner": {
     "name": "Achanta AceEngineer Inc. (DBA AceEngineer)",
     "email": "vamsee.achanta@aceengineer.com",
@@ -17,7 +17,7 @@
       "displayName": "AceEngineer",
       "source": "./plugins/ace-engineer",
       "description": "General engineering agent: intake, domain routing, and a non-bypassable independent verification gate. Install this first.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "author": {
         "name": "Achanta AceEngineer Inc.",
         "email": "vamsee.achanta@aceengineer.com"
@@ -44,7 +44,7 @@
       "displayName": "AceEngineer Marine Dynamics",
       "source": "./plugins/ace-marine-dynamics",
       "description": "OrcaFlex / OrcaWave specialist: mooring, riser, VIV, fatigue, diffraction and hydrodynamic analysis.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "author": {
         "name": "Achanta AceEngineer Inc.",
         "email": "vamsee.achanta@aceengineer.com"
@@ -72,7 +72,7 @@
       "displayName": "AceEngineer Standards",
       "source": "./plugins/ace-standards",
       "description": "Standards and codes specialist with edition discipline. Resolves the governing document, publisher and revision; never reproduces clause text. Requires a licensed standards corpus.",
-      "version": "0.1.0",
+      "version": "0.3.0",
       "author": {
         "name": "Achanta AceEngineer Inc.",
         "email": "vamsee.achanta@aceengineer.com"

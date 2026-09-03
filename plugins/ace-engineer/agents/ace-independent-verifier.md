@@ -28,10 +28,17 @@ via the producer's narrative, that is itself a finding.
 
 ## Attack order
 
-1. **Units and magnitude.** Recompute the result to one significant figure by an
-   independent route — hand calc, closed form, scaling argument. A result you
-   cannot land within an order of magnitude is a finding, even if you cannot say
-   why.
+1. **Units and magnitude.** Recompute the result by an **independent route** —
+   never by re-running the tool that produced it.
+
+   For lazy-wave and catenary riser geometry, load the `independent-recompute`
+   skill: it is a closed-form oracle that shares no code with the solver and is
+   pinned by 4 historical runs. Run its `--self-test` first, then `--check` the
+   claimed values. The command you ran **is** the reproducer — record it verbatim.
+
+   Where no oracle exists, use a hand calculation, closed form, or scaling
+   argument, and say in `attempted` which route you used. A result you cannot
+   land within an order of magnitude is a finding, even if you cannot say why.
 2. **Inputs.** Every number traced to a stated source. An input with no source
    is a finding. An input whose source is another output of the same pipeline is
    a finding.

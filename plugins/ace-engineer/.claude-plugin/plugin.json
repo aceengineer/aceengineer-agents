@@ -1,7 +1,7 @@
 {
   "name": "ace-engineer",
   "displayName": "AceEngineer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "General engineering agent for AceEngineer engagements: scopes the problem, routes to a domain specialist, and gates every deliverable behind independent verification.",
   "author": {
     "name": "Achanta AceEngineer Inc. (DBA AceEngineer)",

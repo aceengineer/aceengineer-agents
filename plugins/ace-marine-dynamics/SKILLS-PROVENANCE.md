@@ -11,7 +11,7 @@ tree; edit upstream and re-run.
 | Uncommitted files at sync time | 0 |
 | SKILL.md count | 60 |
 | Tree sha256 | `1f982f7aaeb772ef80109be75b6dc7a64758141650e87593b28329466cd03b97` |
-| Synced (UTC) | 2026-09-03T14:31:12Z |
+| Synced (UTC) | 2026-09-03T15:22:30Z |
 
 Verify a rebuild is byte-identical:
 

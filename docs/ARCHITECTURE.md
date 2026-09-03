@@ -132,3 +132,52 @@ Three reasons this differs from the marine-offshore skills, which *are* vendored
 the whole product of this plugin. Criteria move between editions; a criterion
 applied from the wrong edition still passes review because the clause number
 resolves and the method looks standard.
+
+
+## Arming the verifier
+
+A verifier instructed to "recompute by an independent route" with no tool to do
+it produces an estimate it talks itself into. The instruction is only as good as
+the second route behind it.
+
+`independent-recompute` (in `ace-marine-dynamics/authored-skills/`) is that
+route for lazy-wave and catenary geometry. Its value rests entirely on one
+property:
+
+> It does not import the solver, does not call `OrcFxAPI`, and does not read a
+> `.sim`. It implements the geometry from first principles against documented
+> invariants, and is pinned by 4 historical solver runs it had no part in
+> producing.
+
+If it shared code with the thing it checks, agreement would carry no
+information. Independence *is* the mechanism.
+
+Three properties matter more than coverage:
+
+1. **It self-tests.** `--self-test` reproduces 72 reference values to `1e-9`.
+   An unchecked oracle is a second opinion, not a verification.
+2. **It refuses outside its validated regime.** Net-downward configurations were
+   never exercised by the historical sweep, so it exits `2` and produces
+   nothing. A tool that returns a plausible number outside its validation is
+   more dangerous than one that stops.
+3. **Its invocation is the reproducer.** `--check key=value` is re-runnable by
+   the client, by a reviewer, and by the verifier against the next fix — which
+   is what makes "a fix is accepted when the reproducer passes" enforceable
+   rather than aspirational.
+
+Coverage is deliberately narrow: lazy-wave geometry only. The skill says
+explicitly that silence on dynamics, fatigue, VIV or clashing is **not** a PASS.
+An oracle that pretended to broad coverage would launder unverified results.
+
+## Vendored vs authored skills
+
+`plugins/ace-marine-dynamics/` carries both, and the distinction is structural,
+not conventional:
+
+| Directory | Owner | Lifecycle |
+|---|---|---|
+| `skills/` | `scripts/sync-skills.sh` | Wiped and rebuilt on every sync; hand edits are lost by design |
+| `authored-skills/` | This repo | Declared via `plugin.json` `"skills"`, never touched by the sync |
+
+Claude Code merges both into one skill namespace, so the split costs nothing at
+runtime and removes a whole class of "the sync ate my work" failure.

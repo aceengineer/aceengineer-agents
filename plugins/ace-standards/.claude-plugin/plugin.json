@@ -1,8 +1,8 @@
 {
   "name": "ace-standards",
   "displayName": "AceEngineer Standards",
-  "version": "0.1.0",
-  "description": "Standards and code specialist with edition discipline: resolves the governing document, publisher and revision for offshore and marine engineering work. Metadata-first — resolves the citation, never reproduces clause text.",
+  "version": "0.3.0",
+  "description": "Standards and code specialist with edition discipline: resolves the governing document, publisher and revision for offshore and marine engineering work. Metadata-first \u2014 resolves the citation, never reproduces clause text.",
   "author": {
     "name": "Achanta AceEngineer Inc. (DBA AceEngineer)",
     "email": "vamsee.achanta@aceengineer.com",
@@ -11,8 +11,19 @@
   "homepage": "https://aceengineer.com",
   "repository": "https://github.com/aceengineer/aceengineer-agents",
   "license": "LicenseRef-AceEngineer-Commercial",
-  "keywords": ["standards", "api", "dnv", "abs", "iso", "norsok", "codes", "compliance"],
-  "dependencies": ["ace-engineer"],
+  "keywords": [
+    "standards",
+    "api",
+    "dnv",
+    "abs",
+    "iso",
+    "norsok",
+    "codes",
+    "compliance"
+  ],
+  "dependencies": [
+    "ace-engineer"
+  ],
   "userConfig": {
     "standards_corpus_path": {
       "type": "string",
