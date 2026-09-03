@@ -1,0 +1,71 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "aceengineer",
+  "description": "Offshore and marine engineering agents, maintained by AceEngineer.",
+  "version": "0.1.0",
+  "owner": {
+    "name": "Achanta AceEngineer Inc. (DBA AceEngineer)",
+    "email": "vamsee.achanta@aceengineer.com",
+    "url": "https://aceengineer.com"
+  },
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "ace-engineer",
+      "displayName": "AceEngineer",
+      "source": "./plugins/ace-engineer",
+      "description": "General engineering agent: intake, domain routing, and a non-bypassable independent verification gate. Install this first.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Achanta AceEngineer Inc.",
+        "email": "vamsee.achanta@aceengineer.com"
+      },
+      "homepage": "https://aceengineer.com",
+      "repository": "https://github.com/aceengineer/aceengineer-agents",
+      "license": "LicenseRef-AceEngineer-Commercial",
+      "category": "engineering",
+      "keywords": [
+        "offshore",
+        "marine",
+        "engineering",
+        "orchestrator",
+        "verification"
+      ],
+      "tags": [
+        "engineering",
+        "orchestrator"
+      ],
+      "defaultEnabled": true
+    },
+    {
+      "name": "ace-marine-dynamics",
+      "displayName": "AceEngineer Marine Dynamics",
+      "source": "./plugins/ace-marine-dynamics",
+      "description": "OrcaFlex / OrcaWave specialist: mooring, riser, VIV, fatigue, diffraction and hydrodynamic analysis.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Achanta AceEngineer Inc.",
+        "email": "vamsee.achanta@aceengineer.com"
+      },
+      "homepage": "https://aceengineer.com",
+      "repository": "https://github.com/aceengineer/aceengineer-agents",
+      "license": "LicenseRef-AceEngineer-Commercial",
+      "category": "engineering",
+      "keywords": [
+        "orcaflex",
+        "orcawave",
+        "mooring",
+        "riser",
+        "viv",
+        "hydrodynamics"
+      ],
+      "tags": [
+        "engineering",
+        "marine"
+      ],
+      "defaultEnabled": true
+    }
+  ]
+}
