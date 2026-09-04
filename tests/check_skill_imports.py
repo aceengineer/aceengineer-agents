@@ -21,6 +21,13 @@ SKILLS = os.path.join(HERE, "..", "plugins", "ace-marine-dynamics", "skills")
 SRC = os.path.join(HERE, "..", "..", "digitalmodel", "src")
 
 # digitalmodel.a.b.c  /  from digitalmodel.a.b import C
+# A skill may declare paths it KNOWS do not exist, so the reference survives as
+# documentation without inflating the unresolved count:
+#     <!-- ace:known-missing: digitalmodel.a.b, digitalmodel.c.D -->
+# Use it only alongside prose telling the reader the capability is absent. It
+# silences the counter, not the problem.
+KNOWN_MISSING = re.compile(r"<!--\s*ace:known-missing:\s*([^>]+?)\s*-->")
+
 DOTTED = re.compile(r"\bdigitalmodel(?:\.[A-Za-z_][A-Za-z0-9_]*)+")
 # Symbols only, on the SAME line -- a greedy \s class swallows following lines and
 # inflates one bad reference into several bogus ones.
@@ -44,7 +51,19 @@ def defines(path, name):
         tree = ast.parse(open(path, encoding="utf-8", errors="replace").read())
     except (OSError, SyntaxError):
         return False
-    for node in tree.body:
+    # Walk into try/except and if blocks: conditional re-exports in __init__.py
+    # are idiomatic, and treating them as absent produced false positives.
+    def body_nodes(nodes):
+        for n in nodes:
+            yield n
+            if isinstance(n, ast.Try):
+                yield from body_nodes(n.body + n.orelse + n.finalbody)
+                for h in n.handlers:
+                    yield from body_nodes(h.body)
+            elif isinstance(n, ast.If):
+                yield from body_nodes(n.body + n.orelse)
+
+    for node in body_nodes(tree.body):
         if isinstance(node, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == name:
             return True
         if isinstance(node, (ast.Import, ast.ImportFrom)):
@@ -75,19 +94,23 @@ def main():
     # document paths that do not resolve (#267). Failing the build outright
     # would just mean a permanently red build nobody reads. Instead the count
     # is pinned: it may go down, never up.
-    baseline = int(os.environ.get("ACE_SKILL_IMPORT_BASELINE", "134"))
+    baseline = int(os.environ.get("ACE_SKILL_IMPORT_BASELINE", "0"))
 
     if not os.path.isdir(SRC):
         print(f"SKIP: digitalmodel source not found at {SRC}")
         return 0
 
-    broken, total_refs, files_with_refs = [], 0, 0
+    broken, total_refs, files_with_refs, ack_total, ack_files = [], 0, 0, 0, 0
     for root, _, files in os.walk(SKILLS):
         for fn in files:
             if fn != "SKILL.md":
                 continue
             path = os.path.join(root, fn)
             text = open(path, encoding="utf-8", errors="replace").read()
+
+            acknowledged = set()
+            for m in KNOWN_MISSING.findall(text):
+                acknowledged.update(x.strip() for x in m.split(",") if x.strip())
 
             refs = set(DOTTED.findall(text))
             for mod, syms in FROM_IMPORT.findall(text):
@@ -97,6 +120,10 @@ def main():
                 continue
             files_with_refs += 1
             rel = os.path.relpath(path, os.path.join(HERE, ".."))
+            if acknowledged:
+                ack_total += len(acknowledged & (refs | acknowledged))
+                ack_files += 1
+            refs -= acknowledged
             for r in sorted(refs):
                 total_refs += 1
                 ok, detail = resolve(r)
@@ -104,9 +131,14 @@ def main():
                     broken.append((rel, r, detail))
 
     print(f"scanned {files_with_refs} SKILL.md files carrying digitalmodel references")
-    print(f"checked {total_refs} documented module/symbol paths\n")
+    print(f"checked {total_refs} documented module/symbol paths")
+    if ack_total:
+        print(f"\n  {ack_total} further path(s) across {ack_files} skill(s) are declared")
+        print(f"  ace:known-missing -- documented as ABSENT, not silently passing.")
+        print(f"  These are fiction that a reader is warned about, not working code.")
+    print()
     if not broken:
-        print("all documented paths resolve")
+        print("all unacknowledged paths resolve")
         return 0
 
     by_skill = {}
