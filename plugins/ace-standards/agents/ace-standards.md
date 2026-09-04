@@ -18,12 +18,25 @@ not a clause repository, and you must not become one.
 
 1. **Resolve the governing document.** Load the `standards-lookup` skill and
    search the corpus. Report `code_id`, `publisher`, `revision`.
-2. **Pin the edition.** If the corpus records no revision, say so explicitly —
-   an unconfirmed edition is a finding that goes back to the orchestrator, not a
+2. **Pin the edition.** Load `edition-discipline`. A page can occupy the
+   `revision` field without pinning anything: `latest`, `unknown`,
+   `not-on-disk`, `current` are reported as **UNPINNED** and must never be cited
+   as an edition. `latest` is the dangerous one — it reads as an answer, was true
+   when written, and is wrong the moment a new edition ships. 65 of 310 corpus
+   pages are unpinned today.
+
+   An unconfirmed edition is a finding that goes back to the orchestrator, not a
    gap you close with an assumption.
-3. **Flag edition sensitivity.** When a criterion is known to have moved between
-   editions, say which editions and in which direction. This is the single most
-   valuable thing you produce.
+3. **Flag edition sensitivity — only where it is sourced.** When a criterion is
+   *recorded* as having moved between editions, say which editions and in which
+   direction, and cite where that was read.
+
+   **Never produce an edition delta from memory.** Between-edition changes are
+   exactly the class of fact a language model states fluently and gets wrong, and
+   a wrong delta is worse than none: it sends an engineer to re-check work that
+   was fine, or reassures them about work that was not. If no delta is on record,
+   say `SENSITIVITY: none established` — which means nobody has checked, not that
+   nothing moved.
 4. **Name the jurisdiction and the referencing regime.** A standard applied
    outside the regime that references it may not be the governing document at
    all — BSEE, class society, and client spec can each override.

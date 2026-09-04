@@ -24,6 +24,22 @@ REL = os.path.join("wikis", "engineering-standards", "wiki", "standards")
 FIELDS = ("title", "code_id", "publisher", "revision", "jurisdiction",
           "license_status", "visibility", "last_updated")
 
+# Values that occupy the `revision` field without pinning an edition. These are
+# worse than a missing field: they read as an answer. "latest" in particular is
+# a promise that expires silently -- it was true when written, is unverifiable
+# now, and becomes wrong the moment a new edition ships without anyone touching
+# the page. All of them are reported as UNPINNED.
+NON_EDITIONS = {"unknown", "latest", "not-on-disk", "n/a", "na", "none",
+                "tbd", "current", "-", ""}
+
+
+def edition_of(meta):
+    """(display, pinned) for a page's revision field."""
+    raw = (meta.get("revision") or "").strip()
+    if raw.strip('"\'').lower() in NON_EDITIONS:
+        return (f"UNPINNED ({raw})" if raw else "UNPINNED (absent)"), False
+    return raw, True
+
 
 def corpus_root(explicit):
     for cand in (explicit,
@@ -73,6 +89,8 @@ def main():
     ap.add_argument("--publisher", help="filter by publisher, e.g. DNV")
     ap.add_argument("--tag", action="append", default=[], help="filter by tag (repeatable)")
     ap.add_argument("--limit", type=int, default=20)
+    ap.add_argument("--unpinned", action="store_true",
+                    help="list only standards whose edition is not pinned")
     args = ap.parse_args()
 
     root = corpus_root(args.corpus)
@@ -108,6 +126,8 @@ def main():
         if terms and not all(t in hay for t in terms):
             continue
 
+        if args.unpinned and edition_of(meta)[1]:
+            continue
         meta["_page"] = os.path.relpath(path, root)
         meta["_tags"] = tags
         hits.append(meta)
@@ -124,7 +144,11 @@ def main():
         print(f"  {m.get('code_id', '?')}")
         print(f"    title      : {m.get('title', '(untitled)')}")
         print(f"    publisher  : {m.get('publisher', 'UNRECORDED')}")
-        print(f"    revision   : {m.get('revision', 'UNRECORDED  <-- edition unconfirmed')}")
+        ed, pinned = edition_of(m)
+        if pinned:
+            print(f"    revision   : {ed}")
+        else:
+            print(f"    revision   : {ed}  <-- EDITION NOT PINNED; do not cite this as an edition")
         if m.get("jurisdiction"):
             print(f"    jurisdiction: {m['jurisdiction']}")
         if m.get("_tags"):
