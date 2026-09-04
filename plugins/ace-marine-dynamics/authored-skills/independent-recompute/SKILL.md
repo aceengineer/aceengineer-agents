@@ -107,8 +107,44 @@ triangle must reproduce the input declination. `atan(Fh/Fv)` gave 7.025° where
 When you extend this oracle: **derive, or find an identity that constrains the
 answer independently. Never fit to the thing you are checking.**
 
+## Simple catenary and taut-leg mooring
+
+`scripts/catenary_oracle.py` covers the other two configurations a specialist
+result commonly takes. Same rule, same independence.
+
+```bash
+scripts/catenary_oracle.py --self-test
+scripts/catenary_oracle.py --length 1000 --span 800 --rise 100 \
+    --weight 1962 --ea 64e9 --check H=671478 --check T_fairlead=1288813
+scripts/catenary_oracle.py --audit-fixture
+```
+
+**Regime is reported, not assumed.** If the line is shorter than the
+anchor-to-fairlead distance it cannot sag, so the oracle solves it as an elastic
+taut leg and says so. A solver that silently switches regime is how a taut line
+gets reported with catenary tensions.
+
+**It refuses rather than guesses.** A taut geometry with no `EA` is refused — it
+will not invent an axial stiffness. A line length exactly equal to the gap is
+refused too: the line is straight and unstretched, so tension is indeterminate
+from geometry alone.
+
+### Validated against identities, not against fixtures
+
+`digitalmodel` has three catenary fixtures. **None is used here**, deliberately:
+
+- two were extracted from `test_simplified.py` — i.e. from the code under test,
+  which makes them a mirror rather than a check;
+- the third publishes two conflicting answers for one set of inputs, and
+  `--audit-fixture` shows **neither satisfies the geometry it is stated against**.
+
+Instead the self-test asserts what must hold for any correct solution: all three
+boundary conditions met at once, `V_fairlead − V_anchor = w·S`, `T = hypot(H,V)`
+at both ends, closed form equal to numerical quadrature, and tension rising
+monotonically as slack approaches the taut limit.
+
 ## Scope
 
-Lazy-wave and simple catenary geometry only. It says nothing about dynamics,
+Lazy-wave, simple catenary and taut-leg geometry. It says nothing about dynamics,
 fatigue, VIV, clashing, or soil interaction. Silence from this oracle on those
 is not a PASS — reach for a different route and say which one you used.

@@ -17,6 +17,9 @@ python3 tests/check_skill_imports.py || rc=1
 step "named file paths resolve (ratchet, #267)"
 python3 tests/check_skill_paths.py || rc=1
 
+step "catenary/taut oracle identities"
+plugins/ace-marine-dynamics/authored-skills/independent-recompute/scripts/catenary_oracle.py --self-test || rc=1
+
 step "vendored skills reproduce byte-identically"
 ./scripts/sync-skills.sh --verify || rc=1
 

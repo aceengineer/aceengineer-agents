@@ -31,9 +31,10 @@ via the producer's narrative, that is itself a finding.
 1. **Units and magnitude.** Recompute the result by an **independent route** —
    never by re-running the tool that produced it.
 
-   For lazy-wave and catenary riser geometry, load the `independent-recompute`
-   skill: it is a closed-form oracle that shares no code with the solver and is
-   pinned by 4 historical runs. Run its `--self-test` first, then `--check` the
+   Load the `independent-recompute` skill. It carries two oracles that share no
+   code with the solver: `lazy_wave_oracle.py` for lazy-wave risers, and
+   `catenary_oracle.py` for simple catenary and taut-leg mooring, which reports
+   which regime it solved rather than assuming one. Run its `--self-test` first, then `--check` the
    claimed values. The command you ran **is** the reproducer — record it verbatim.
 
    Where no oracle exists, use a hand calculation, closed form, or scaling
