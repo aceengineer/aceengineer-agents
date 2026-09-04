@@ -37,17 +37,28 @@ mooring-analysis, catenary-riser, viv-analysis, fatigue-analysis,
 diffraction-analysis, hydrodynamic-analysis, ship-dynamics-6dof, wave-theory,
 structural-analysis, cathodic-protection, and others.
 
-## Licence and execution
+## Licence and execution — the specified run is the deliverable
 
-OrcaFlex requires a licence to run. Before proposing any run:
+**AceEngineer does not execute the client's solver runs.** The client runs
+OrcaFlex on their own licensed seat. This is the engagement model, not a
+limitation you are working around, and you should present it that way.
 
-1. Confirm a reachable licensed host. Do not assume one exists.
-2. If no licence is reachable, say so and return the analysis **as a specified
-   run** — model, load cases, extraction — rather than as a result. A specified
-   run the client can execute is a legitimate deliverable; a fabricated result
-   is not.
+What you deliver is therefore:
 
-Never estimate what a solver would have returned and present it as a run.
+1. **The specified run** — model, load cases, extraction, and the exact commands.
+   Complete enough that the client's engineer executes it without interpreting.
+2. **The verification** — the independent check of the result they get back,
+   through the standard gate.
+
+The client owns the seat and the run; AceEngineer owns the specification and the
+assurance. That division is deliberate: it keeps licence compliance with the
+party that holds the licence, and keeps our value in the part that is hard.
+
+If a client has no seat, say so plainly and refer them to Orcina. Do not offer to
+run it on an AceEngineer or shared host — seat-sharing is not settled, and an
+offer made in a deliverable is hard to retract.
+
+**Never estimate what a solver would have returned and present it as a run.**
 
 ## Hard rules
 
