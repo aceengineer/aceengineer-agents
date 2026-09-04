@@ -7,11 +7,11 @@ tree; edit upstream and re-run.
 |---|---|
 | Source repo | `https://github.com/vamseeachanta/workspace-hub` |
 | Source path | `.claude/skills/engineering/marine-offshore` |
-| Source commit | `abc2188aea90844af1c8ec11e05f35e9a731b41d` |
-| Uncommitted files at sync time | 17 |
+| Source commit | `c0d58120b92cdbfe0817fe0d68c4973103cd7270` |
+| Uncommitted files at sync time | 7 |
 | SKILL.md count | 60 |
-| Tree sha256 | `c3e358c74464d3791c48c74f6d79bbdf10d7c00f7e97adc37b6abba442cba106` |
-| Synced (UTC) | 2026-09-04T00:14:30Z |
+| Tree sha256 | `5d3623d2de9bf5777c5415659ae261e720dcb959aeee2c54f7bfc079fe3fb7bc` |
+| Synced (UTC) | 2026-09-04T00:24:12Z |
 
 Verify a rebuild is byte-identical:
 
