@@ -1,24 +1,35 @@
-# Notice — corpus provenance and an open licensing question
+# Notice — provenance of the vendored skill corpus
 
-The marine-offshore skill corpus vendored into `plugins/ace-marine-dynamics/skills/`
-is copied from `github.com/vamseeachanta/workspace-hub`, path
-`.claude/skills/engineering/marine-offshore`.
+The marine-offshore skill corpus in `plugins/ace-marine-dynamics/skills/` is
+vendored from `github.com/vamseeachanta/workspace-hub`, path
+`.claude/skills/engineering/marine-offshore`, by `scripts/sync-skills.sh`. The
+source commit and a tree hash are recorded in
+`plugins/ace-marine-dynamics/SKILLS-PROVENANCE.md`, and
+`./scripts/sync-skills.sh --verify` asserts a byte-identical rebuild.
 
-**Two facts to resolve before this marketplace is published:**
+## The corpus is public, deliberately
 
-1. **`workspace-hub` is a public repository with no `LICENSE` file.** Absent a
-   licence grant, the content is all-rights-reserved to the copyright holder, so
-   vendoring it here is clean. But the corpus is nonetheless publicly readable at
-   its source, which undercuts a paid licence for the same content. Decide
-   deliberately: move the corpus to a private repository, or accept that the
-   commercial value sits in the orchestration, verification gate, and support
-   rather than in the skill text.
+The source repository is public. That is a decision, not an oversight: what is
+licensed here is the orchestration, the independent-verification gate, the audit
+trail it produces, and the maintenance behind them — not the skill text. Skills
+are copyable; an assurance chain that cannot emit an unverified number is the
+part that is not.
 
-2. **Copyright holder vs. licensor.** `workspace-hub`, `digitalmodel`,
-   `assetutilities` and the rest are owned by the personal GitHub account
-   `vamseeachanta`, while this marketplace licenses as Achanta AceEngineer Inc.
-   Record an assignment or licence from the individual to the company so the
-   entity granting the commercial licence is the entity that holds the rights.
+## Known limits of the corpus
 
-Neither is a code problem. Both are cheap to fix now and expensive to fix after
-the first customer.
+Some skills document a `digitalmodel` API that does not exist. Those carry an
+explicit warning and an `ace:known-missing` marker naming every absent path, and
+their intended API is specified in `digitalmodel` under
+`docs/domains/orcawave/intended-api/`. `tests/check_skill_imports.py` runs in
+`tests/run_all.sh` and fails on any new unresolved path, so this cannot silently
+get worse.
+
+We would rather ship a corpus that tells you where it is thin than one that reads
+as complete and fails when an agent depends on it.
+
+## Third-party standards content
+
+`ace-standards` ships **no corpus**. It reads a separately licensed standards
+corpus from a path you configure, and resolves metadata only — publisher,
+document identifier, revision — never clause text. See that plugin's skill
+documentation for the boundary.
