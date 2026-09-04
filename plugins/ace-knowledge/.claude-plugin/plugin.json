@@ -1,0 +1,31 @@
+{
+  "name": "ace-knowledge",
+  "displayName": "AceEngineer Knowledge",
+  "version": "0.3.1",
+  "description": "Client document ingestion: turns an engineering archive into a structured, verifiable knowledge store. Enforces a tenancy boundary so one client's material cannot reach another's engagement.",
+  "author": {
+    "name": "Achanta AceEngineer Inc. (DBA AceEngineer)",
+    "email": "vamsee.achanta@aceengineer.com",
+    "url": "https://aceengineer.com"
+  },
+  "homepage": "https://aceengineer.com",
+  "repository": "https://github.com/aceengineer/aceengineer-agents",
+  "license": "LicenseRef-AceEngineer-Commercial",
+  "keywords": ["ingestion", "knowledge", "documents", "extraction", "corpus", "tenancy"],
+  "dependencies": ["ace-engineer"],
+  "userConfig": {
+    "engagement_root": {
+      "type": "string",
+      "title": "Engagement root",
+      "description": "Absolute path to THIS engagement's directory. Client material is read and written only beneath it; the tenancy hook denies file access outside it. Required — the boundary cannot be enforced without knowing where it is.",
+      "required": true
+    },
+    "client_id": {
+      "type": "string",
+      "title": "Client identifier",
+      "description": "Short identifier for the client this engagement belongs to. Recorded in every ingested page's provenance and used to detect cross-engagement contamination.",
+      "required": true
+    }
+  },
+  "defaultEnabled": true
+}

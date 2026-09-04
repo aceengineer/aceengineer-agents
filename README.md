@@ -14,6 +14,7 @@ client. The verification gate is the product.
 /plugin install ace-engineer@aceengineer
 /plugin install ace-marine-dynamics@aceengineer
 /plugin install ace-standards@aceengineer
+/plugin install ace-knowledge@aceengineer
 ```
 
 `ace-standards` requires a licensed standards corpus. Point it at your clone:
@@ -34,7 +35,8 @@ Then, in any project:
 |---|---|
 | **ace-engineer** | `ace-engineer` orchestrator, `ace-independent-verifier`, `engagement-intake` skill, `/ace` command |
 | **ace-marine-dynamics** | `orcaflex-specialist` + 60 vendored marine-offshore skills — mooring, riser, VIV, fatigue, diffraction, hydrodynamics, ship dynamics, wave theory — plus `independent-recompute`, the verifier's closed-form oracle |
-| **ace-standards** | `ace-standards` + `standards-lookup` over 354 corpus pages — resolves governing document, publisher and **edition**. Metadata only; never reproduces clause text. |
+| **ace-standards** | `ace-standards` + `standards-lookup` and `edition-discipline` over 354 corpus pages — resolves governing document, publisher and **edition**. Metadata only; never reproduces clause text. |
+| **ace-knowledge** | `ace-knowledge` + 14 ingestion skills — turns a client archive into a knowledge store with measured coverage. Carries a **tenancy gate** that denies file access to a sibling engagement. |
 
 Install `ace-engineer` first. The specialists are written to run under it and do
 not carry the verification gate themselves.
@@ -93,7 +95,8 @@ manifest validation. No network, no licences, no solver.
 
 ## Status
 
-`0.3.0` — three plugins, gate enforced in a hook, verifier armed with an independent oracle. See
+`0.3.1` — four plugins. Two hooks enforce the two contractual claims: no
+unverified deliverable, and no client material across engagements. See
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the design and
 [`docs/ROADMAP.md`](docs/ROADMAP.md) for what is not built yet (`ace-knowledge`,
 the `claude plugin eval` suite, and the org/licensing preconditions).

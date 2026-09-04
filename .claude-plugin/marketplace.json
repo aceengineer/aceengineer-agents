@@ -95,6 +95,33 @@
         "standards"
       ],
       "defaultEnabled": true
+    },
+    {
+      "name": "ace-knowledge",
+      "displayName": "AceEngineer Knowledge",
+      "source": "./plugins/ace-knowledge",
+      "description": "Client document ingestion with measured coverage, faithful extraction, and a tenancy gate that keeps one client's material out of another's engagement.",
+      "version": "0.3.1",
+      "author": {
+        "name": "Achanta AceEngineer Inc.",
+        "email": "vamsee.achanta@aceengineer.com"
+      },
+      "homepage": "https://aceengineer.com",
+      "repository": "https://github.com/aceengineer/aceengineer-agents",
+      "license": "LicenseRef-AceEngineer-Commercial",
+      "category": "engineering",
+      "keywords": [
+        "ingestion",
+        "knowledge",
+        "documents",
+        "extraction",
+        "tenancy"
+      ],
+      "tags": [
+        "engineering",
+        "knowledge"
+      ],
+      "defaultEnabled": true
     }
   ]
 }

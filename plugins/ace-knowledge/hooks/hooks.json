@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Write|Edit|Glob|Grep|Bash|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/tenancy_gate.py\"",
+            "timeout": 15,
+            "statusMessage": "AceEngineer tenancy gate…"
+          }
+        ]
+      }
+    ]
+  }
+}

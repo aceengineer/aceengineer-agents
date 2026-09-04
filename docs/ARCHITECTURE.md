@@ -210,3 +210,43 @@ not conventional:
 
 Claude Code merges both into one skill namespace, so the split costs nothing at
 runtime and removes a whole class of "the sync ate my work" failure.
+
+
+## The second gate: tenancy
+
+`ace-knowledge` handles client archives, which makes *"client corpora never
+cross engagements"* a contractual claim rather than a preference. It is
+therefore a hook, not a sentence in a prompt — the same reasoning that moved the
+verification gate to L3.
+
+`plugins/ace-knowledge/scripts/tenancy_gate.py` runs before `Read`, `Write`,
+`Edit`, `Glob`, `Grep`, `Bash` and `NotebookEdit`, and denies access to a
+**sibling** engagement:
+
+```
+engagement_root = /work/engagements/client-a
+  /work/engagements/client-b/**   DENIED
+  /work/engagements/client-a/**   allowed
+  /usr/lib/python3/**             allowed
+```
+
+### Why siblings, and not everything outside the root
+
+A gate that blocked every path outside one directory would block reading the
+plugin's own skills, the interpreter, and the repo tooling. **A gate that breaks
+ordinary work gets switched off, and then it protects nobody.** Precision here is
+not permissiveness; it is what keeps the control alive.
+
+The real exposure is narrow: an agent working engagement A wanders into
+engagement B sitting next to it on disk. That is what is denied — including via
+relative paths that escape upward, and via paths embedded in `Bash` commands,
+where the scan is deliberately coarse. A false positive there costs one prompt;
+a false negative costs a client's confidential material.
+
+Behaviour is pinned by `tests/test_tenancy_gate.py` — 12 cases, and **five of
+them assert the gate does NOT fire**. Those matter as much as the denials, for
+the reason above.
+
+### Same failure semantics as the verification gate
+
+Fails **closed** on a sibling hit. Fails **open** on its own internal errors.

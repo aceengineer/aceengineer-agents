@@ -18,7 +18,15 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..")
-SKILLS = os.path.join(ROOT, "plugins")
+# Scoped to ace-marine-dynamics on purpose. Those skills name files in
+# digitalmodel, so a path that does not resolve is a real defect.
+#
+# The ace-knowledge (playbook) skills are different in kind: their paths describe
+# the corpus BEING BUILT -- `sources/README.md` is a convention for the target
+# store, which does not exist until the ingestion runs. Checking those would
+# report a design as a defect, and a checker that cries wolf gets ignored, which
+# costs more than the coverage gains.
+SKILLS = os.path.join(ROOT, "plugins", "ace-marine-dynamics")
 ROOTS = [
     os.path.join(ROOT, ".."),                      # ws/
     ROOT,                                          # aceengineer-agents/

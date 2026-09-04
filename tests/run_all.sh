@@ -8,6 +8,9 @@ step() { echo; echo "=== $1 ==="; }
 step "verification gate behaviour"
 python3 tests/test_verification_gate.py || rc=1
 
+step "tenancy gate behaviour"
+python3 tests/test_tenancy_gate.py || rc=1
+
 step "independent oracle vs historical reference runs"
 plugins/ace-marine-dynamics/authored-skills/independent-recompute/scripts/lazy_wave_oracle.py --self-test || rc=1
 
@@ -22,6 +25,9 @@ plugins/ace-marine-dynamics/authored-skills/independent-recompute/scripts/catena
 
 step "vendored skills reproduce byte-identically"
 ./scripts/sync-skills.sh --verify || rc=1
+
+step "playbook skills reproduce byte-identically"
+./scripts/sync-playbook-skills.sh --verify || rc=1
 
 step "plugin manifests validate"
 for p in plugins/*/; do
