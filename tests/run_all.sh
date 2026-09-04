@@ -11,6 +11,9 @@ python3 tests/test_verification_gate.py || rc=1
 step "independent oracle vs historical reference runs"
 plugins/ace-marine-dynamics/authored-skills/independent-recompute/scripts/lazy_wave_oracle.py --self-test || rc=1
 
+step "documented skill imports resolve (ratchet, #267)"
+python3 tests/check_skill_imports.py || rc=1
+
 step "vendored skills reproduce byte-identically"
 ./scripts/sync-skills.sh --verify || rc=1
 
