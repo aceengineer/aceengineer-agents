@@ -1,0 +1,342 @@
+
+=== BASE closed-form ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          452.6864612651 m
+  segment S                    3221.0315 / 397.8768 / 397.8768 / 1114.2395 / 1114.2395
+  total_S                      6245.2641417055 m
+  total_X                      3400.6427273504 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112.765
+  Fv  ROUTE2 (equilibrium)     7,913,093.496
+  Fv  = w*S1                   7,913,093.496
+  Fv  = w*(S1+a_w)  [solver]   9,025,206.261
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859.996
+  T = w*(a_w+d1)               7,990,859.996
+
+=== BASE numerical quadrature (Simpson, 4e6 panels) ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          452.6864612651 m
+  segment S                    3221.0315 / 397.8768 / 397.8768 / 1114.2395 / 1114.2395
+  total_S                      6245.2641417054 m
+  total_X                      3400.6427273504 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112.765
+  Fv  ROUTE2 (equilibrium)     7,913,093.496
+  Fv  = w*S1                   7,913,093.496
+  Fv  = w*(S1+a_w)  [solver]   9,025,206.261
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859.996
+  T = w*(a_w+d1)               7,990,859.996
+
+=== UNITS x1 (N/m) ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          452.6864612651 m
+  segment S                    3221.0315 / 397.8768 / 397.8768 / 1114.2395 / 1114.2395
+  total_S                      6245.2641417055 m
+  total_X                      3400.6427273504 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112.765
+  Fv  ROUTE2 (equilibrium)     7,913,093.496
+  Fv  = w*S1                   7,913,093.496
+  Fv  = w*(S1+a_w)  [solver]   9,025,206.261
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859.996
+  T = w*(a_w+d1)               7,990,859.996
+
+=== UNITS x0.101972 (kgf/m) ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          452.6864612651 m
+  segment S                    3221.0315 / 397.8768 / 397.8768 / 1114.2395 / 1114.2395
+  total_S                      6245.2641417055 m
+  total_X                      3400.6427273504 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   113,403.942
+  Fv  ROUTE2 (equilibrium)     806,910.973
+  Fv  = w*S1                   806,910.973
+  Fv  = w*(S1+a_w)  [solver]   920,314.915
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       814,840.949
+  T = w*(a_w+d1)               814,840.949
+
+=== UNITS x0.0685218 (lbf/ft-ish) ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          452.6864612651 m
+  segment S                    3221.0315 / 397.8768 / 397.8768 / 1114.2395 / 1114.2395
+  total_S                      6245.2641417055 m
+  total_X                      3400.6427273504 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   76,203.935
+  Fv  ROUTE2 (equilibrium)     542,219.173
+  Fv  = w*S1                   542,219.173
+  Fv  = w*(S1+a_w)  [solver]   618,423.108
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       547,547.871
+  T = w*(a_w+d1)               547,547.871
+
+=== UNITS x1e+06 (absurd) ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          452.6864612651 m
+  segment S                    3221.0315 / 397.8768 / 397.8768 / 1114.2395 / 1114.2395
+  total_S                      6245.2641417055 m
+  total_X                      3400.6427273504 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112,765,010.355
+  Fv  ROUTE2 (equilibrium)     7,913,093,496,031.660
+  Fv  = w*S1                   7,913,093,496,031.661
+  Fv  = w*(S1+a_w)  [solver]   9,025,206,261,042.016
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859,996,210.517
+  T = w*(a_w+d1)               7,990,859,996,210.518
+
+=== DECL read from HORIZONTAL instead of vertical ===
+  angle-from-horizontal        8.000000 deg
+  a_w (hang-off bend radius)   284912.6775402042 m
+  a_b (buoyed radius)          284912.6775402042 m
+  segment S                    40041.8655 / 9246.4211 / 9246.4211 / 20686.5057 / 20686.5057
+  total_S                      99907.7190446297 m
+  total_X                      99737.5513502479 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   699,943,675.630
+  Fv  ROUTE2 (equilibrium)     98,370,668.418
+  Fv  = w*S1                   98,370,668.418
+  Fv  = w*(S1+a_w)  [solver]   798,314,344.047
+  ROUTE3 required Fv/Fh = tan  0.140540835
+    equilibrium  Fv/Fh         0.140540835
+    solver       Fv/Fh         1.140540835   -> implied declination 41.2435 deg
+  T = sqrt(Fh^2+Fv_eq^2)       706,822,422.861
+  T = w*(a_w+d1)               706,822,422.861
+
+=== WEIGHT PAIR perturbed |wb|/w = 1.000000000000 ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          452.6864612651 m
+  segment S                    3221.0315 / 397.8768 / 397.8768 / 1114.2395 / 1114.2395
+  total_S                      6245.2641417055 m
+  total_X                      3400.6427273504 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112.765
+  Fv  ROUTE2 (equilibrium)     7,913,093.496
+  Fv  = w*S1                   7,913,093.496
+  Fv  = w*(S1+a_w)  [solver]   9,025,206.261
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859.996
+  T = w*(a_w+d1)               7,990,859.996
+
+=== WEIGHT PAIR perturbed |wb|/w = 1.000000000001 ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          452.6864612646 m
+  segment S                    3221.0315 / 397.8768 / 397.8768 / 1114.2395 / 1114.2395
+  total_S                      6245.2641417050 m
+  total_X                      3400.6427273498 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112.765
+  Fv  ROUTE2 (equilibrium)     7,913,093.496
+  Fv  = w*S1                   7,913,093.496
+  Fv  = w*(S1+a_w)  [solver]   9,025,206.261
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859.996
+  T = w*(a_w+d1)               7,990,859.996
+
+=== WEIGHT PAIR perturbed |wb|/w = 1.000001000000 ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          452.6860085791 m
+  segment S                    3221.0315 / 397.8769 / 397.8765 / 1114.2388 / 1114.2399
+  total_S                      6245.2636663372 m
+  total_X                      3400.6421045407 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112.765
+  Fv  ROUTE2 (equilibrium)     7,913,093.496
+  Fv  = w*S1                   7,913,093.496
+  Fv  = w*(S1+a_w)  [solver]   9,025,206.261
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859.996
+  T = w*(a_w+d1)               7,990,859.996
+
+=== WEIGHT PAIR perturbed |wb|/w = 1.001000000000 ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          452.2342270380 m
+  segment S                    3221.0315 / 397.9903 / 397.5927 / 1113.5305 / 1114.6441
+  total_S                      6244.7892087849 m
+  total_X                      3400.0204596416 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112.765
+  Fv  ROUTE2 (equilibrium)     7,913,093.496
+  Fv  = w*S1                   7,913,093.496
+  Fv  = w*(S1+a_w)  [solver]   9,025,206.261
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859.996
+  T = w*(a_w+d1)               7,990,859.996
+
+=== WEIGHT PAIR perturbed |wb|/w = 1.010000000000 ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          448.2044170941 m
+  segment S                    3221.0315 / 399.0063 / 395.0557 / 1107.1941 / 1118.2660
+  total_S                      6240.5536776588 m
+  total_X                      3394.4684555171 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112.765
+  Fv  ROUTE2 (equilibrium)     7,913,093.496
+  Fv  = w*S1                   7,913,093.496
+  Fv  = w*(S1+a_w)  [solver]   9,025,206.261
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859.996
+  T = w*(a_w+d1)               7,990,859.996
+
+=== WEIGHT PAIR perturbed |wb|/w = 1.050000000000 ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          431.1299631096 m
+  segment S                    3221.0315 / 403.3971 / 384.1877 / 1079.9618 / 1133.9599
+  total_S                      6222.5380593298 m
+  total_X                      3370.8022025865 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112.765
+  Fv  ROUTE2 (equilibrium)     7,913,093.496
+  Fv  = w*S1                   7,913,093.496
+  Fv  = w*(S1+a_w)  [solver]   9,025,206.261
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859.996
+  T = w*(a_w+d1)               7,990,859.996
+
+=== WEIGHT PAIR perturbed |wb|/w = 1.100000000000 ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          411.5331466046 m
+  segment S                    3221.0315 / 408.6157 / 371.4688 / 1047.9068 / 1152.6974
+  total_S                      6201.7201953380 m
+  total_X                      3343.3497408979 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112.765
+  Fv  ROUTE2 (equilibrium)     7,913,093.496
+  Fv  = w*S1                   7,913,093.496
+  Fv  = w*(S1+a_w)  [solver]   9,025,206.261
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859.996
+  T = w*(a_w+d1)               7,990,859.996
+
+=== ANGLE 7.5 deg ===
+  angle-from-horizontal        82.500000 deg
+  a_w (hang-off bend radius)   420.3385253770 m
+  a_b (buoyed radius)          420.3385253770 m
+  segment S                    3192.7881 / 385.4887 / 385.4887 / 1092.2490 / 1092.2490
+  total_S                      6148.2634518549 m
+  total_X                      3251.1012972954 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,032,643.738
+  Fv  ROUTE2 (equilibrium)     7,843,707.923
+  Fv  = w*S1                   7,843,707.923
+  Fv  = w*(S1+a_w)  [solver]   8,876,351.662
+  ROUTE3 required Fv/Fh = tan  7.595754113
+    equilibrium  Fv/Fh         7.595754113
+    solver       Fv/Fh         8.595754113   -> implied declination 6.6358 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,911,390.970
+  T = w*(a_w+d1)               7,911,390.970
+
+=== ANGLE 8.0 deg ===
+  angle-from-horizontal        82.000000 deg
+  a_w (hang-off bend radius)   452.6864612651 m
+  a_b (buoyed radius)          452.6864612651 m
+  segment S                    3221.0315 / 397.8768 / 397.8768 / 1114.2395 / 1114.2395
+  total_S                      6245.2641417055 m
+  total_X                      3400.6427273504 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,112,112.765
+  Fv  ROUTE2 (equilibrium)     7,913,093.496
+  Fv  = w*S1                   7,913,093.496
+  Fv  = w*(S1+a_w)  [solver]   9,025,206.261
+  ROUTE3 required Fv/Fh = tan  7.115369722
+    equilibrium  Fv/Fh         7.115369722
+    solver       Fv/Fh         8.115369722   -> implied declination 7.0247 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,990,859.996
+  T = w*(a_w+d1)               7,990,859.996
+
+=== ANGLE 8.5 deg ===
+  angle-from-horizontal        81.500000 deg
+  a_w (hang-off bend radius)   485.6499902346 m
+  a_b (buoyed radius)          485.6499902346 m
+  segment S                    3249.5600 / 410.1158 / 410.1158 / 1136.2108 / 1136.2108
+  total_S                      6342.2132321609 m
+  total_X                      3547.8618432044 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,193,094.116
+  Fv  ROUTE2 (equilibrium)     7,983,179.139
+  Fv  = w*S1                   7,983,179.139
+  Fv  = w*(S1+a_w)  [solver]   9,176,273.256
+  ROUTE3 required Fv/Fh = tan  6.691156238
+    equilibrium  Fv/Fh         6.691156238
+    solver       Fv/Fh         7.691156238   -> implied declination 7.4080 deg
+  T = sqrt(Fh^2+Fv_eq^2)       8,071,841.348
+  T = w*(a_w+d1)               8,071,841.348
+
+=== ANGLE 7.0 deg ===
+  angle-from-horizontal        83.000000 deg
+  a_w (hang-off bend radius)   388.5915597772 m
+  a_b (buoyed radius)          388.5915597772 m
+  segment S                    3164.8243 / 372.9309 / 372.9309 / 1070.2277 / 1070.2277
+  total_S                      6051.1415225168 m
+  total_X                      3098.9256151452 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   954,651.113
+  Fv  ROUTE2 (equilibrium)     7,775,009.381
+  Fv  = w*S1                   7,775,009.381
+  Fv  = w*(S1+a_w)  [solver]   8,729,660.493
+  ROUTE3 required Fv/Fh = tan  8.144346428
+    equilibrium  Fv/Fh         8.144346428
+    solver       Fv/Fh         9.144346428   -> implied declination 6.2409 deg
+  T = sqrt(Fh^2+Fv_eq^2)       7,833,398.344
+  T = w*(a_w+d1)               7,833,398.344
+
+=== ANGLE 9.0 deg ===
+  angle-from-horizontal        81.000000 deg
+  a_w (hang-off bend radius)   519.2441890523 m
+  a_b (buoyed radius)          519.2441890523 m
+  segment S                    3278.3788 / 422.2242 / 422.2242 / 1158.1737 / 1158.1737
+  total_S                      6439.1745107500 m
+  total_X                      3693.0300386097 m
+  closure residual             0.000e+00 m
+  Fh = w*a_w                   1,275,624.831
+  Fv  ROUTE2 (equilibrium)     8,053,978.211
+  Fv  = w*S1                   8,053,978.211
+  Fv  = w*(S1+a_w)  [solver]   9,329,603.042
+  ROUTE3 required Fv/Fh = tan  6.313751515
+    equilibrium  Fv/Fh         6.313751515
+    solver       Fv/Fh         7.313751515   -> implied declination 7.7857 deg
+  T = sqrt(Fh^2+Fv_eq^2)       8,154,372.063
+  T = w*(a_w+d1)               8,154,372.063

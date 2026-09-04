@@ -1,0 +1,6 @@
+Independent recompute vs claimed result:
+
+  AGREE    hangoff_bend_radius: 452.686  (oracle 452.68646126508355, dev 1.02e-06)
+  AGREE    total_S: 6245.26  (oracle 6245.264141705511, dev 6.63e-07)
+
+verdict: AGREE — an independent route reproduces the claim

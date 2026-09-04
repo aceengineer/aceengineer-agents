@@ -11,10 +11,23 @@ the hook was live.
 | Intake | ✅ Frame block produced. Refused to invent a standard or criterion; flagged missing weight units as load-bearing assumption A1 |
 | Specialist | ✅ Result produced with full provenance — solver commit, file md5, exact commands |
 | Verifier | ✅ Wrote its own independent check (3 routes) and **refuted the producer** |
-| Verdict artifact | ❌ Not written — run truncated at the 900 s wall clock |
-| Deliverable | ❌ Never reached |
-| Gate deny path | ✅ Confirmed separately: blocked a deliverable with no verification record, and the agent refused to strip the marker to get around it |
-| Gate admit path | ⬜ Still untested |
+| Verdict artifact | ✅ `.ace/verdicts/lazy-wave-geometry.json` — PASS, 8 attacks recorded, runnable reproducer |
+| Deliverable | ✅ `deliverables/lazy-wave-geometry.md`, six-section shape |
+| Gate **deny** path | ✅ Blocked a deliverable with no verification record; the agent refused to route around it with `sed` |
+| Gate **admit** path | ✅ Admitted the deliverable carrying a PASS verdict |
+
+### The controlled comparison
+
+Back to back, same session config, same directory:
+
+| Write | Gate |
+|---|---|
+| Deliverable **with** `ace:verdict:` → PASS verdict on disk | **admitted**, 10,066 bytes written |
+| Deliverable **without** a verification record | **denied**, hook quoted verbatim, file never created |
+
+This control matters: an allowing hook is silent, and so is an absent one. Only
+the paired result shows the gate was live *and* discriminating rather than simply
+not running.
 
 ## MAJOR — the oracle's own `Fv` was wrong, and the chain caught it
 
@@ -63,8 +76,18 @@ back).
   the given 1.0 moves it by +442 m (~7%). Should not be issued as confirmed
   until the buoyancy-module data sheet is produced.
 
-## Process finding
+## Process finding — the verification stage is the cost
 
-One static geometry check took **>15 minutes** of wall clock and did not finish.
-The verification stage is the expensive part. This matters commercially and
-should be measured before any turnaround time is promised.
+Two attempts at a single unattended run were killed by a 900 s wall clock, both
+reported as **exit 0 with empty output**, which reads as success. The stage that
+consumes the budget is verification: eight attacks, one of them a 4×10⁶-panel
+quadrature.
+
+Completing it required breaking the engagement into bounded steps. That is a real
+operating constraint, not a harness quirk:
+
+- a full engagement does not fit in one unattended run;
+- a timed-out run **looks like a clean exit**, so a supervising process must check
+  for the artifacts, never the exit code.
+
+Measure this before promising any turnaround time.

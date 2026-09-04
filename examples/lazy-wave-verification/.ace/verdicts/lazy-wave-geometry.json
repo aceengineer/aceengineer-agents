@@ -1,0 +1,51 @@
+{
+  "slug": "lazy-wave-geometry",
+  "verdict": "PASS",
+  "verified_utc": "2026-09-04T14:34:05Z",
+  "target": "deliverables/lazy-wave-geometry.md",
+  "attempted": [
+    {
+      "attack": "Closed-form vs numerical quadrature",
+      "detail": "Recomputed every segment arc length by Simpson quadrature of dS = cosh(x/a) dx over 4e6 panels, using no closed-form arc-length expression, and compared against the closed form sqrt(d(2a+d)).",
+      "result": "No refutation. a_w identical to 10 dp (452.6864612651 m); total_S 6245.2641417054 vs 6245.2641417055 m, i.e. 1e-10 m apart. The claimed numbers are not an artifact of the closed form."
+    },
+    {
+      "attack": "Units invariance on the two weights (A1)",
+      "detail": "Re-ran with both weights scaled by 1 (N/m), 1/9.80665 (kgf/m), 0.06852177 (lbf/ft-ish) and 1e6 (deliberately absurd), to test whether the unstated weight units are load-bearing on the requested numbers.",
+      "result": "No refutation for the requested numbers. a_w = 452.6864612651 m and total_S = 6245.2641417055 m under every scale; only Fh, Fv and T scale linearly. The undeclared N/m assumption therefore affects the reported forces only, not the geometry."
+    },
+    {
+      "attack": "Declination convention (A6)",
+      "detail": "Re-read the 8 deg input as measured from the horizontal instead of from the vertical, the alternative convention the client left undefined.",
+      "result": "Assumption confirmed as load-bearing, and correctly flagged by the producer. The horizontal reading gives a_w = 284912.68 m and total_S = 99907.72 m \u2014 a factor ~630 and ~16 respectively. Both requested numbers are meaningful only under the stated convention A6; the deliverable states it, so this is a declared dependency, not a defect."
+    },
+    {
+      "attack": "Exact equal-and-opposite weight pair",
+      "detail": "Perturbed |w_b|/w through 1+1e-12, 1e-6, 1e-3, 0.01, 0.05, 0.10 to test whether the result sits on a knife edge created by the client's exactly symmetric weight pair.",
+      "result": "No refutation. a_w is exactly invariant (452.6864612651 m at every perturbation) because it depends on the declination and d1 only, not on w_b. total_S degrades smoothly: 6245.2641 -> 6245.2637 (1e-6) -> 6244.7892 (1e-3) -> 6240.5537 (1%) -> 6201.7202 (10%), i.e. -0.70% for a 10% weight-pair error. No singular behaviour; closure residual stayed 0.000e+00 throughout."
+    },
+    {
+      "attack": "Angle tolerance on the two requested numbers",
+      "detail": "Swept the hang-off declination over 7.0, 7.5, 8.0, 8.5, 9.0 deg to test the producer's stated precision bands for a rounded '8 deg' input.",
+      "result": "Producer's stated precision substantiated. a_w spans 420.34-485.65 m over +/-0.5 deg (about 453 +/- 33 m, matching the claim) and 388.59-519.24 m over +/-1.0 deg. total_S spans 6148.26-6342.21 m over +/-0.5 deg (about 6245 +/- 97 m, within the claimed +/-100 m) and 6051.14-6439.17 m over +/-1.0 deg. Both requested numbers are far more sensitive to the rounded input angle than to any modelling choice tested here."
+    },
+    {
+      "attack": "Force cross-check by two routes independent of the catenary closed form",
+      "detail": "ROUTE 2: summed submerged weight x arc length over all five segments (global vertical equilibrium with V=0 at the TDP, no catenary formula). ROUTE 3: the tangent identity Fv/Fh = tan(90 - declination), which is fixed by the input angle alone.",
+      "result": "The producer's disclosed Fv = w*S1 = 7,913,093 N is confirmed by both routes (equilibrium sum reproduces it exactly; Fv/Fh = 7.115369722 = tan(82 deg) to 9 dp). The named solver's own vertical_force = 9,025,206 N = w*(S1+a_w) is refuted: it implies a 7.0247 deg declination against an 8.000 deg input. This vindicates the producer's substitution and touches neither requested number."
+    },
+    {
+      "attack": "Geometric closure",
+      "detail": "Checked d1 - d2 - d3 + d4 + d5 against the 4000 m hang-off-to-seabed span in every one of the 19 configurations run above.",
+      "result": "No refutation. Residual 0.000e+00 m in all cases, including the perturbed-weight and off-convention runs."
+    },
+    {
+      "attack": "Independent-recompute oracle in --check mode",
+      "detail": "Ran the first-principles lazy-wave oracle (imports neither the digitalmodel solver nor OrcFxAPI) against both requested numbers.",
+      "result": "AGREE on both. hangoff_bend_radius: oracle 452.68646126508355 (dev 1.02e-06 vs the rounded claim 452.686); total_S: oracle 6245.264141705511 (dev 6.63e-07 vs the rounded claim 6245.26). Deviations are the rounding of the checked values, not disagreement."
+    }
+  ],
+  "reproducer": "plugins/ace-marine-dynamics/authored-skills/independent-recompute/scripts/lazy_wave_oracle.py --hangoff-angle 8 --vertical-distance 4000 --sag-bend-elevation 1200 --hog-bend-above-seabed 1500 --weight-without-buoyancy 2456.695439714344 --weight-with-buoyancy -2456.695439714344 --check hangoff_bend_radius=452.686 --check total_S=6245.26",
+  "rounds": 1,
+  "findings": []
+}
