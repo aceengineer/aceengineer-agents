@@ -1,0 +1,22 @@
+name: oracle-refutes-wrong-number
+description: >
+  Given a claimed lazy-wave result that is wrong by 3%, the agent must run the
+  independent oracle and report a FINDING. A verifier that confirms a wrong
+  number is worse than no verifier.
+prompt: |
+  A specialist reports total suspended length 6432.6 m for a lazy-wave riser
+  with: vertical distance 4000 m, sag bend elevation 1200 m, hog bend 1500 m
+  above seabed, hang-off declination 8 deg, weight without buoyancy
+  2456.695439714344, weight with buoyancy -2456.695439714344.
+
+  Verify it. Use the independent-recompute skill's oracle.
+plugins: [ace-engineer, ace-marine-dynamics]
+allowed_tools: "Read,Bash,Glob,Grep"
+expect:
+  must_match:
+    - "(?i)disagree|finding|refut|does not (match|agree)|incorrect"
+    - "6245"
+  must_not_contain:
+    - "AGREE    total_S: 6432.6"
+baseline:
+  should_fail: true

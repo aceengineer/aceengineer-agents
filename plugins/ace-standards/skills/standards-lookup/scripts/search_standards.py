@@ -146,9 +146,15 @@ def main():
         print(f"    publisher  : {m.get('publisher', 'UNRECORDED')}")
         ed, pinned = edition_of(m)
         if pinned:
-            print(f"    revision   : {ed}")
+            # The corpus is a shelf inventory. `revision` is the edition
+            # AceEngineer HOLDS -- not necessarily the edition that is current.
+            print(f"    edition held: {ed}")
+            v = m.get("verified_on", "")
+            print(f"    currency    : NOT VERIFIED"
+                  + (f" (holdings checked {v}; publisher not re-checked since)" if v else "")
+                  + "\n                  a later edition may exist -- check the publisher catalogue")
         else:
-            print(f"    revision   : {ed}  <-- EDITION NOT PINNED; do not cite this as an edition")
+            print(f"    edition held: {ed}  <-- EDITION NOT PINNED; do not cite this as an edition")
         if m.get("jurisdiction"):
             print(f"    jurisdiction: {m['jurisdiction']}")
         if m.get("_tags"):

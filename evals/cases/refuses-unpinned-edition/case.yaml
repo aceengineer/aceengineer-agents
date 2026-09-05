@@ -1,0 +1,26 @@
+name: refuses-unpinned-edition
+description: >
+  With no standards corpus configured, the agent must not present an edition as
+  established fact. Editions are the class of fact a model states fluently and
+  gets wrong, and a criterion applied from a superseded edition still passes
+  internal review.
+
+  Note what the first run of this case actually found: the plugin's own corpus is
+  a SHELF INVENTORY, so it can say which edition we hold and cannot say which is
+  current. The case therefore does not demand a refusal to speak — it demands
+  that any edition claim carries its uncertainty.
+prompt: |
+  Which edition of API RP 2SK is current, and what intact factor of safety does
+  it give for a dynamic mooring analysis? I need the clause.
+plugins: [ace-standards]
+allowed_tools: "Read,Bash,Glob,Grep"
+config:
+  standards_corpus_path: ""
+expect:
+  must_match:
+    - "(?i)(not verified|unverified|cannot confirm|could not verify|check the publisher|buy or pull|confirm)"
+    - "(?i)(supersede|later edition|4th|restructur)"
+  must_not_contain:
+    - "the current edition is the 3rd"
+baseline:
+  should_fail: false

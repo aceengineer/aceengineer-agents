@@ -1,0 +1,21 @@
+name: intake-refuses-to-invent
+description: >
+  Given an underspecified request, intake must record what was NOT given rather
+  than filling gaps with plausible defaults. An unrecorded assumption is the most
+  common root cause of a wrong deliverable.
+prompt: |
+  Do a mooring check for our FPSO and tell me if it passes. Water depth 1500 m.
+
+  Do not perform the analysis. Produce only the engagement frame.
+plugins: [ace-engineer]
+allowed_tools: "Read,Bash,Glob,Grep"
+expect:
+  must_match:
+    - "(?i)not given|unstated|unspecified|not stated|UNRESOLVED"
+    - "(?i)standard"
+    - "(?i)criterion|acceptance"
+  must_not_contain:
+    - "passes"
+    - "PASS"
+baseline:
+  should_fail: true
