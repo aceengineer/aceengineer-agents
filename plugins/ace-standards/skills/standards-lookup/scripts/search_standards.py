@@ -149,10 +149,25 @@ def main():
             # The corpus is a shelf inventory. `revision` is the edition
             # AceEngineer HOLDS -- not necessarily the edition that is current.
             print(f"    edition held: {ed}")
-            v = m.get("verified_on", "")
-            print(f"    currency    : NOT VERIFIED"
-                  + (f" (holdings checked {v}; publisher not re-checked since)" if v else "")
-                  + "\n                  a later edition may exist -- check the publisher catalogue")
+            cs = (m.get("currency_status") or "").strip().lower()
+            pub = m.get("publisher_current_edition", "")
+            chk = m.get("currency_checked_on", "")
+            if cs == "superseded":
+                print(f"    currency    : SUPERSEDED  <-- publisher-current is {pub or 'a later edition'}"
+                      f" (checked {chk})\n                  the held edition is NOT current;"
+                      " existing work against it is edition-sensitive")
+            elif cs == "current":
+                print(f"    currency    : current as at {chk}")
+            elif cs == "unresolved":
+                print(f"    currency    : UNRESOLVED (checked {chk}) -- a later edition is"
+                      " indicated but\n                  was not confirmed; do not cite the held"
+                      " edition as current")
+            else:
+                v = m.get("verified_on", "")
+                print(f"    currency    : NEVER CHECKED"
+                      + (f" (holdings recorded {v})" if v else "")
+                      + "\n                  the corpus knows the shelf, not the market --"
+                      " check the publisher catalogue")
         else:
             print(f"    edition held: {ed}  <-- EDITION NOT PINNED; do not cite this as an edition")
         if m.get("jurisdiction"):

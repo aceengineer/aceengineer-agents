@@ -59,6 +59,8 @@ def main():
     ap.add_argument("--unpinned", action="store_true")
     ap.add_argument("--supersession", action="store_true")
     ap.add_argument("--summary", action="store_true")
+    ap.add_argument("--currency", action="store_true",
+                    help="report which standards have had publisher currency checked")
     args = ap.parse_args()
 
     root = corpus_root(args.corpus)
@@ -76,16 +78,31 @@ def main():
         code = meta.get("code_id", fn[:-3])
         rev = (meta.get("revision") or "").strip()
         pinned = rev.lower() not in NON_EDITIONS
+        cur = (meta.get("currency_status") or "").strip().lower()
         struct = {k: meta[k] for k in STRUCTURED
                   if k in meta and meta[k].strip().lower() not in EMPTY}
         rebrand = {k: meta[k] for k in REBRAND
                    if k in meta and meta[k].strip().lower() not in EMPTY}
-        pages.append((code, rev, pinned, struct, bool(PROSE.search(body)), fn, rebrand))
+        pages.append((code, rev, pinned, struct, bool(PROSE.search(body)), fn, rebrand,
+                      cur, meta.get("publisher_current_edition", "")))
+
+    if args.currency:
+        checked = [p for p in pages if p[7]]
+        print(f"{len(checked)} of {len(pages)} standards have had publisher currency checked\n")
+        for code, rev, _, _, _, _, _, cur, pub in checked:
+            tag = {"superseded": "SUPERSEDED", "current": "current",
+                   "unresolved": "UNRESOLVED"}.get(cur, cur.upper())
+            print(f"  {code:20s} held {rev:22s} {tag}"
+                  + (f"   publisher-current: {pub}" if pub else ""))
+        print(f"\n  {len(pages)-len(checked)} standards have NEVER been currency-checked.")
+        print("  For those the corpus records what is on the shelf and is silent")
+        print("  about the market -- and silence reads as currency.")
+        return 0
 
     if args.unpinned:
         rows = [p for p in pages if not p[2]]
         print(f"{len(rows)} of {len(pages)} standards have no pinned edition\n")
-        for code, rev, _, _, _, _, _ in rows:
+        for code, rev, *_ in rows:
             print(f"  {code:38s} revision: {rev or '(absent)'}")
         print("\nAn unpinned edition is a finding, not a gap to fill with an assumption.")
         return 0
@@ -94,14 +111,14 @@ def main():
         s = [p for p in pages if p[3]]
         pr = [p for p in pages if not p[3] and p[4]]
         print(f"{len(s)} standard(s) record supersession in a STRUCTURED field:\n")
-        for code, _, _, struct, _, _, _ in s:
+        for code, _, _, struct, *_ in s:
             print(f"  {code}")
             for k, v in struct.items():
                 print(f"      {k}: {v[:110]}")
         print(f"\n{len(pr)} further standard(s) mention supersession only in PROSE.")
         print("  A prose mention is a lead, not an assertion. Read the page before")
         print("  relying on it, and promote it to a structured field if it holds:")
-        for code, _, _, _, _, _, _ in pr[:20]:
+        for code, *_ in pr[:20]:
             print(f"      {code}")
         if len(pr) > 20:
             print(f"      … and {len(pr)-20} more")
@@ -123,6 +140,10 @@ def main():
                  if any(k in read(os.path.join(sdir, p[5]))[0] for k in STRUCTURED)
                  and not p[3])
     print(f"  supersession key present but EMPTY  {hollow}   (e.g. `supersedes: None`)")
+    cc = sum(1 for p in pages if p[7])
+    sup = sum(1 for p in pages if p[7] == "superseded")
+    print(f"  publisher currency checked      {cc}  ({100*cc//total}%)")
+    print(f"    of those, SUPERSEDED          {sup}")
     print(f"  edition deltas established      0   <- nobody has checked any yet")
     print("\n  'edition deltas established: 0' means no criterion-level change has")
     print("  been verified against both documents. It does NOT mean nothing moved.")
