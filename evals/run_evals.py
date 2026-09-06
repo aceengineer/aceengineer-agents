@@ -69,6 +69,18 @@ def load_yaml(path):
     return d
 
 
+RUNS = os.path.join(HERE, "runs")
+
+
+def save(name, arm, text):
+    """Keep every transcript. A failing eval you cannot read is not a result --
+    it is a rumour, and re-running to find out costs more than the disk."""
+    os.makedirs(RUNS, exist_ok=True)
+    path = os.path.join(RUNS, f"{name}.{arm}.txt")
+    open(path, "w", encoding="utf-8").write(text)
+    return path
+
+
 def run_case(case, with_plugins, timeout):
     cmd = ["claude", "-p", case["prompt"]]
     if with_plugins:
@@ -101,6 +113,10 @@ def grade(case, out):
     for pat in exp.get("must_match", []):
         if not re.search(pat, out):
             fails.append(f"no match for pattern: {pat!r}")
+    for pat in exp.get("must_not_match", []):
+        m = re.search(pat, out)
+        if m:
+            fails.append(f"matched forbidden pattern {pat!r} at {m.group(0)!r}")
     return fails
 
 
@@ -127,17 +143,21 @@ def main():
         print(f"\n=== {case.get('name', n)} ===")
 
         out = run_case(case, True, args.timeout)
+        p1 = save(case.get("name", n), "plugin", out)
         fails = grade(case, out)
         arm = "PASS" if not fails else "FAIL"
         print(f"  with plugins:   {arm}")
         for f in fails:
             print(f"      {f}")
         if fails:
+            print(f"      transcript: {os.path.relpath(p1, ROOT)}")
+        if fails:
             hard_fail = True
 
         base = "-"
         if not args.no_baseline:
             bout = run_case(case, False, args.timeout)
+            save(case.get("name", n), "baseline", bout)
             bfails = grade(case, bout)
             base = "PASS" if not bfails else "FAIL"
             print(f"  without plugins: {base}"

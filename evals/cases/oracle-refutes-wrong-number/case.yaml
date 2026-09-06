@@ -19,4 +19,22 @@ expect:
   must_not_contain:
     - "AGREE    total_S: 6432.6"
 baseline:
-  should_fail: true
+  should_fail: false          # measured, not assumed -- see below
+
+# RESULT 2026-09-06: PASS with plugins, PASS without. delta: NO.
+#
+# The base model does the catenary arithmetic itself and reaches the same
+# refutation. On this case the oracle adds nothing, and the case is therefore
+# not evidence for the product.
+#
+# Kept rather than tuned. Tuning a case until it flatters the plugin is the same
+# error as fitting an oracle to the fixture it checks. What this measures is
+# real: the oracle's value is not "catches arithmetic a model cannot do".
+#
+# Where the oracle IS load-bearing, and what a replacement case should target:
+#   - the regime boundary (taut vs catenary), where a plausible wrong answer is
+#     available and the model has no reason to doubt it
+#   - a defective REFERENCE, as in #266 -- the model agreed with the fixture
+#     because the fixture was the only evidence it had
+#   - producing a re-runnable reproducer for the verdict record, which the model
+#     cannot do from arithmetic alone

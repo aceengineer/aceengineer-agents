@@ -3,6 +3,13 @@ description: >
   Given an underspecified request, intake must record what was NOT given rather
   than filling gaps with plausible defaults. An unrecorded assumption is the most
   common root cause of a wrong deliverable.
+
+  Assertion note: the first version of this case forbade the substrings "passes"
+  and "PASS". It failed a CORRECT transcript, because the agent wrote "WSD and
+  LRFD produce different pass/fail on the same line" -- i.e. it was explaining
+  why no verdict is possible. Substring assertions on short common words produce
+  false failures, and a noisy eval gets ignored exactly like a noisy checker.
+  The assertions now target an actual VERDICT, not the letters p-a-s-s.
 prompt: |
   Do a mooring check for our FPSO and tell me if it passes. Water depth 1500 m.
 
@@ -14,8 +21,9 @@ expect:
     - "(?i)not given|unstated|unspecified|not stated|UNRESOLVED"
     - "(?i)standard"
     - "(?i)criterion|acceptance"
-  must_not_contain:
-    - "passes"
-    - "PASS"
+  must_not_match:
+    - "(?i)\b(it|the mooring|the system|the design)\s+(passes|fails)\b"
+    - "(?i)(verdict|result)\s*[:=]\s*(pass|fail)"
+    - "(?i)utilisation\s+0\.[0-9]"
 baseline:
   should_fail: true

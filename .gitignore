@@ -3,3 +3,6 @@
 node_modules/
 .venv/
 __pycache__/
+
+# eval transcripts: retained locally for diagnosis, not committed
+evals/runs/
